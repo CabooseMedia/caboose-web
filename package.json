@@ -6,8 +6,8 @@
   "author": "Isaac Robbins <isaacprobbins@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node dist/index.js",
-    "dev": "cross-env NODE_ENV=development ts-node src/index.ts",
+    "start": "cross-env CABOOSE_WEB_ENV=production node dist/index.js",
+    "dev": "cross-env CABOOSE_WEB_ENV=development ts-node src/index.ts",
     "build": "node_modules/.bin/rimraf dist .next && tsc -p . && next build"
   },
   "dependencies": {
