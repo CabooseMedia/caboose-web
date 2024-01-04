@@ -12,7 +12,8 @@ export class NextManager extends Manager {
 
     public initialize(): void {
         this.nextApp = next({
-            dev: process.env.CABOOSE_WEB_ENV === 'development'
+            dev: process.env.CABOOSE_WEB_ENV === 'development',
+            dir: "../../app"
         });
         this.nextHandler = this.nextApp.getRequestHandler();
     }
