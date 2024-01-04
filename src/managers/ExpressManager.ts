@@ -22,7 +22,7 @@ export class ExpressManager extends Manager {
 
     public initialize(): void {
 
-        this.serverPort = parseInt(process.env.SERVER_PORT ?? '52470');
+        this.serverPort = parseInt(process.env.SERVER_PORT ?? '52471');
         this.certsDir = path.resolve(UNIVERSAL.DATA_DIR, 'certs');
 
         if (!fs.existsSync(this.certsDir)) {
