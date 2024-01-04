@@ -1,0 +1,56 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "outDir": "dist",
+        "strict": true,
+        "declaration": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "@logger": [
+                "src/util/log"
+            ],
+            "@util/*": [
+                "src/util/*"
+            ],
+            "@caboose/server": [
+                "src/CabooseServer"
+            ],
+            "@caboose/managers": [
+                "src/managers/index"
+            ],
+            "@caboose/events": [
+                "src/events/index"
+            ],
+            "@caboose/types": [
+                "src/types/index"
+            ]
+        },
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "noEmit": false,
+        "incremental": false,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
+    },
+    "include": [
+        "src/**/*.ts",
+        ".next/types/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
