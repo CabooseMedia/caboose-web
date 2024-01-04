@@ -1,5 +1,5 @@
 import { EventType } from './EventTypes';
 
-export {
+export type {
     EventType
 }
