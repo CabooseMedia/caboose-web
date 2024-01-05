@@ -19,6 +19,8 @@ export class CabooseServer extends EventEmitter {
 
         this.nextManager = new NextManager(this);
 
+        console.log(UNIVERSAL.CABOOSE_SERVER_MODE);
+
         if (UNIVERSAL.CABOOSE_SERVER_MODE == "internal") {
             this.managers = [
                 this.nextManager
