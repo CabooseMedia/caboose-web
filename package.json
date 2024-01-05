@@ -8,7 +8,7 @@
   "scripts": {
     "start": "cross-env CABOOSE_WEB_ENV=production node dist/index.js",
     "dev": "cross-env CABOOSE_WEB_ENV=development ts-node src/index.ts",
-    "build": "node_modules/.bin/rimraf dist .next && tsc -p . && next build"
+    "build": "node_modules/.bin/rimraf dist out .next && tsc -p . && next build"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
@@ -31,6 +31,7 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^1.5.9",
     "@types/express": "^4.17.21",
     "@types/module-alias": "^2.0.4",
     "@types/react": "^18.2.46",
