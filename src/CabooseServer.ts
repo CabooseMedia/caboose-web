@@ -4,6 +4,7 @@ import { EventEmitter } from 'events';
 import { ExpressManager, Manager, RouteManager, SocketManager, NextManager } from "@caboose/managers";
 import { EventType } from "@caboose/types";
 import { ServerEvents } from "@caboose/events";
+import { UNIVERSAL } from "@util/universal";
 
 export class CabooseServer extends EventEmitter {
 
@@ -11,7 +12,7 @@ export class CabooseServer extends EventEmitter {
     private expressManager: ExpressManager;
     private routeManager: RouteManager;
     private socketManager: SocketManager;
-    private NextManager: NextManager;
+    private nextManager: NextManager;
 
     constructor() {
         super();
@@ -19,14 +20,20 @@ export class CabooseServer extends EventEmitter {
         this.expressManager = new ExpressManager(this);
         this.routeManager = new RouteManager(this);
         this.socketManager = new SocketManager(this);
-        this.NextManager = new NextManager(this);
+        this.nextManager = new NextManager(this);
 
-        this.managers = [
-            this.expressManager,
-            this.routeManager,
-            this.socketManager,
-            this.NextManager
-        ];
+        if (UNIVERSAL.CABOOSE_SERVER_MODE == "internal") {
+            this.managers = [
+                this.nextManager
+            ];
+        } else {
+            this.managers = [
+                this.expressManager,
+                this.routeManager,
+                this.socketManager,
+                this.nextManager
+            ];
+        }
 
         this.emit(ServerEvents.INITIALIZED);
     }
@@ -58,7 +65,7 @@ export class CabooseServer extends EventEmitter {
     }
 
     public getNextManager(): NextManager {
-        return this.NextManager;
+        return this.nextManager;
     }
 
     public emit(event: EventType, ...args: any[]): boolean {
