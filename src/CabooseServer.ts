@@ -9,17 +9,14 @@ import { UNIVERSAL } from "@util/universal";
 export class CabooseServer extends EventEmitter {
 
     private managers: Manager[];
-    private expressManager: ExpressManager;
-    private routeManager: RouteManager;
-    private socketManager: SocketManager;
+    private expressManager!: ExpressManager;
+    private routeManager!: RouteManager;
+    private socketManager!: SocketManager;
     private nextManager: NextManager;
 
     constructor() {
         super();
 
-        this.expressManager = new ExpressManager(this);
-        this.routeManager = new RouteManager(this);
-        this.socketManager = new SocketManager(this);
         this.nextManager = new NextManager(this);
 
         if (UNIVERSAL.CABOOSE_SERVER_MODE == "internal") {
@@ -27,6 +24,9 @@ export class CabooseServer extends EventEmitter {
                 this.nextManager
             ];
         } else {
+            this.expressManager = new ExpressManager(this);
+            this.routeManager = new RouteManager(this);
+            this.socketManager = new SocketManager(this);
             this.managers = [
                 this.expressManager,
                 this.routeManager,
