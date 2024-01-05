@@ -4,6 +4,7 @@ import { UNIVERSAL } from '@util/universal';
 import { Request, Response } from 'express';
 import next from 'next';
 import { NextServer, RequestHandler } from 'next/dist/server/next';
+import path from 'path';
 
 export class NextManager extends Manager {
 
@@ -13,7 +14,7 @@ export class NextManager extends Manager {
     public initialize(): void {
         this.nextApp = next({
             dev: process.env.CABOOSE_WEB_ENV === 'development',
-            dir: "."
+            dir: path.resolve(__dirname, "../../")
         });
         this.nextHandler = this.nextApp.getRequestHandler();
     }
