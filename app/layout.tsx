@@ -1,10 +1,15 @@
 import { Providers } from "./providers";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: "Caboose"
+    title: "Caboose",
+    manifest: "/manifest.json"
 }
+
+export const viewport: Viewport = {
+    themeColor: "#000000",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
