@@ -26,7 +26,13 @@
             ],
             "@caboose/types": [
                 "src/types/index"
-            ]
+            ],
+            "@components/*": [
+                "components/*"
+            ],
+            "@lib/*": [
+                "lib/*"
+            ],
         },
         "lib": [
             "dom",

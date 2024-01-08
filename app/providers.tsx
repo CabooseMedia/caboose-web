@@ -2,7 +2,7 @@
 
 import { SessionProvider } from 'next-auth/react';
 import { NextUIProvider } from '@nextui-org/react'
-import { SocketProvider } from '../lib/network';
+import { SocketProvider } from '@components/socket';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (

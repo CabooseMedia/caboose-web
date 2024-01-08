@@ -1,11 +1,8 @@
 import winston from 'winston';
-import path from 'path';
 
 import chalk from 'chalk';
 
 const { combine, timestamp } = winston.format;
-
-const logDir = path.resolve(__dirname, '../../../data/logs');
 
 function colorize(level: string, message: string): string {
     switch (level) {
@@ -30,16 +27,11 @@ const consoleFormat = winston.format.printf(({ level, message, timestamp }) => {
     return `[TIME:${timestamp}] [LEVEL:${colorize(level, level)}]: ${colorize(level, message)}`;
 });
 
-const fileFormat = winston.format.printf(({ level, message, timestamp }) => {
-    return `[TIME:${timestamp}] [LEVEL:${level}]: ${message}`;
-});
-
 const LEVEL: string = process.env.LOG_LEVEL ?? 'info';
 
 const logger = winston.createLogger({
     transports: [
         new winston.transports.Console({ level: LEVEL, format: combine(timestamp(), consoleFormat) }),
-        new winston.transports.File({ filename: `${logDir}/caboose.log`, level: 'debug', options: { flags: 'w' }, format: combine(timestamp(), fileFormat) }),
     ]
 });
 
