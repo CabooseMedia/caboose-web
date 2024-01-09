@@ -1,7 +1,8 @@
 'use client';
 
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "@nextui-org/react";
+import React from "react";
 
 export default function RootPage() {
     const { data: session } = useSession();
@@ -10,7 +11,15 @@ export default function RootPage() {
             <Button onPress={() => signIn("discord")}>
                 Login with Discord
             </Button>
-            <h1>{session?.user?.name ?? "not logged in"}</h1>
+            <Button onPress={() => signIn("google")}>
+                Login with Google
+            </Button>
+            <Button onPress={() => signOut()}>
+                Sign Out
+            </Button>
+            <h1>
+                {session ? `Hello ${session.user?.name}` : "You are not logged in"}
+            </h1>
         </div>
     )
 }
