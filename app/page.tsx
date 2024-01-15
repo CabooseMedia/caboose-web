@@ -5,21 +5,42 @@ import { Button } from "@nextui-org/react";
 import React from "react";
 
 export default function RootPage() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+
+    if (status == "loading") {
+        return (
+            <div className='fixed inset-0 w-full h-full'>
+                <h1>
+                    Loading...
+                </h1>
+            </div>
+        )
+    }
+
+    if (session) {
+        return (
+            <div className='fixed inset-0 w-full h-full'>
+                <Button onPress={() => signIn("discord")}>
+                    Link Discord
+                </Button>
+                <Button onPress={() => signIn("google")}>
+                    Link Google
+                </Button>
+                <Button onPress={() => signOut()}>
+                    Sign Out
+                </Button>
+                <h1>
+                    Hello {session.user?.name ?? session.user?.email}
+                </h1>
+            </div>
+        )
+    }
+
     return (
         <div className='fixed inset-0 w-full h-full'>
-            <Button onPress={() => signIn("discord")}>
-                Login with Discord
+            <Button onPress={() => signIn()}>
+                Login
             </Button>
-            <Button onPress={() => signIn("google")}>
-                Login with Google
-            </Button>
-            <Button onPress={() => signOut()}>
-                Sign Out
-            </Button>
-            <h1>
-                {session ? `Hello ${session.user?.name}` : "You are not logged in"}
-            </h1>
         </div>
     )
 }

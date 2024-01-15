@@ -6,7 +6,7 @@ import { SocketProvider } from '@components/socket';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
-        <SessionProvider>
+        <SessionProvider basePath='/auth'>
             <NextUIProvider>
                 <SocketProvider>
                     {children}

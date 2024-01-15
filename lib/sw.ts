@@ -7,10 +7,12 @@ declare const self: ServiceWorkerGlobalScope & {
     __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
 };
 
-installSerwist({
-    precacheEntries: self.__SW_MANIFEST,
-    skipWaiting: true,
-    clientsClaim: true,
-    navigationPreload: true,
-    runtimeCaching: defaultCache,
-});
+if (process.env.CABOOSE_WEB_ENV === "production") {
+    installSerwist({
+        precacheEntries: self.__SW_MANIFEST,
+        skipWaiting: true,
+        clientsClaim: true,
+        navigationPreload: true,
+        runtimeCaching: defaultCache,
+    });
+}

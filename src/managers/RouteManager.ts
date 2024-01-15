@@ -3,11 +3,31 @@ import logger from "@logger";
 import { UNIVERSAL } from '@util/universal';
 import { Request, Response } from 'express';
 import path from 'path';
+import axios from 'axios';
 
 export class RouteManager extends Manager {
 
     public handleAll(req: Request, res: Response): void {
-        this.caboose.getNextManager().getNextHandler()(req, res);
+        let serverHost = process.env.SERVER_URL;
+        if (req.path.startsWith('/api')) {
+        axios({
+            url: `${serverHost}${req.path}`,
+            method: req.method,
+            data: req.body,
+            responseType: 'stream',
+            timeout: 5000
+        }).then((response) => {
+            if (response.status === 404) {
+                this.caboose.getNextManager().getNextHandler()(req, res);
+            } else {
+                response.data.pipe(res);
+            }
+        }).catch((err) => {
+            this.caboose.getNextManager().getNextHandler()(req, res);
+        });
+        } else {
+            this.caboose.getNextManager().getNextHandler()(req, res);
+        }
     }
 
     public registerGETRoute(route: string, callback: (req: Request, res: Response) => void): void {
