@@ -21,6 +21,7 @@
     "@serwist/precaching": "^8.3.0",
     "@serwist/sw": "^8.3.0",
     "axios": "^1.6.5",
+    "bcryptjs": "^2.4.3",
     "chalk": "4.1.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.9",
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/module-alias": "^2.0.4",
     "@types/react": "^18.2.46",

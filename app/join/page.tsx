@@ -25,7 +25,6 @@ export default function JoinPage() {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(codeValue, emailValue, passwordValue, confirmPasswordValue);
         signIn("credentials", {
             code: codeValue,
             email: emailValue,

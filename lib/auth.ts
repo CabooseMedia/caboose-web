@@ -7,6 +7,7 @@ import Credentials from "next-auth/providers/credentials";
 import Discord from "next-auth/providers/discord"
 import Google from "next-auth/providers/google"
 import { encode } from "next-auth/jwt";
+import bcrypt from "bcryptjs";
 
 export const auth: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -50,10 +51,11 @@ export const auth: NextAuthOptions = {
                         return null;
                     }
                     if (invite.email == null || invite.email == email) {
+                        const passwordHash = await bcrypt.hash(password, 10);
                         const user = await prisma.user.create({
                             data: {
                                 email: email,
-                                password: password
+                                password: passwordHash
                             }
                         });
                         const account = await prisma.account.create({
@@ -81,7 +83,8 @@ export const auth: NextAuthOptions = {
                         return null;
                     }
                 } else {
-                    if (existingUser.password == password) {
+                    const match = await bcrypt.compare(password, existingUser.password ?? "");
+                    if (match) {
                         return {
                             id: existingUser.id,
                             name: existingUser.name,
