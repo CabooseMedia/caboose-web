@@ -2,11 +2,12 @@
 
 import { Button, Input } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function JoinPage() {
+    const router = useRouter();
     const searchParams = useSearchParams();
     const code = searchParams.get("code");
     const email = searchParams.get("email");
@@ -121,6 +122,7 @@ export default function JoinPage() {
                             Submit
                         </Button>
                     </form>
+                    <Button onPress={() => router.push("/signin")}>Sign In</Button>
                 </div>
             </div>
         </div>

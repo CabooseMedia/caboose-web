@@ -2,11 +2,12 @@
 
 import { Button, Input } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function SignInPage() {
+    const router = useRouter();
 
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
@@ -58,6 +59,7 @@ export default function SignInPage() {
                     })}>
                         Login with Credentials
                     </Button>
+                    <Button onPress={() => router.push("/join")}>Join</Button>
                 </div>
             </div>
         </div>

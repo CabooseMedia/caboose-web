@@ -13,7 +13,7 @@ export const auth: NextAuthOptions = {
     pages: {
         signIn: "/signin",
         signOut: "/signout",
-        error: "/error",
+        error: "/signin",
         verifyRequest: "/request",
         newUser: "/welcome",
     },
@@ -107,6 +107,7 @@ export const auth: NextAuthOptions = {
         async encode({ secret, token, maxAge }) {
             const cookie = cookies().get("next-auth.session-token")?.value;
             if (cookie) {
+                cookies().delete("next-auth.session-token");
                 return cookie;
             }
             return encode({ secret, token, maxAge });
@@ -114,6 +115,24 @@ export const auth: NextAuthOptions = {
     },
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
+            const accountExists = await prisma.account.findFirst({
+                where: {
+                    userId: user.id,
+                    provider: account?.provider,
+                }
+            });
+            if (accountExists == null) {
+                const cookie = cookies().get("__Secure-next-auth.session-token")?.value;
+                const hasCurrentSession = await prisma.session.findFirst({
+                    where: {
+                        sessionToken: cookie
+                    }
+                });
+                if (hasCurrentSession) {
+                    return true;
+                }
+                return false;
+            }
             if (account?.provider == "credentials") {
                 if (user) {
                     const session = await prisma.session.create({

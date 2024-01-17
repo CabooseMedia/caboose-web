@@ -10,21 +10,17 @@ export class RouteManager extends Manager {
     public handleAll(req: Request, res: Response): void {
         let serverHost = process.env.SERVER_URL;
         if (req.path.startsWith('/api')) {
-        axios({
-            url: `${serverHost}${req.path}`,
-            method: req.method,
-            data: req.body,
-            responseType: 'stream',
-            timeout: 5000
-        }).then((response) => {
-            if (response.status === 404) {
-                this.caboose.getNextManager().getNextHandler()(req, res);
-            } else {
+            axios({
+                url: `${serverHost}${req.path}`,
+                method: req.method,
+                data: req.body,
+                responseType: 'stream',
+                timeout: 5000
+            }).then((response) => {
                 response.data.pipe(res);
-            }
-        }).catch((err) => {
-            this.caboose.getNextManager().getNextHandler()(req, res);
-        });
+            }).catch((err) => {
+                err.response.data.pipe(res);
+            });
         } else {
             this.caboose.getNextManager().getNextHandler()(req, res);
         }
